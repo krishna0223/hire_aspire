@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="profile-container">
+    <h1>Your Profile</h1>
+    
+    <!-- Profile Info Section -->
+    <div class="profile-info">
+        <h2>Personal Information</h2>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" value="{{ user.first_name }} {{ user.last_name }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" value="{{ user.email }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="text" id="phone" name="phone" value="{{ user_profile.phone }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="resume">Upload Resume</label>
+                <input type="file" id="resume" name="resume">
+            </div>
+            
+            <button type="submit" class="btn">Save Changes</button>
+        </form>
+    </div>
+
+    <!-- Skills Section -->
+    <div class="skills-section">
+        <h2>Your Skills</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="skills">List Your Skills (Comma Separated)</label>
+                <textarea id="skills" name="skills" rows="4">{{ user_profile.skills }}</textarea>
+            </div>
+
+            <button type="submit" class="btn">Update Skills</button>
+        </form>
+    </div>
+
+    <!-- Profile Completion Status -->
+    <div class="profile-status">
+        <h3>Profile Completion: {{ profile_completion }}%</h3>
+        <div class="progress-bar">
+            <div class="progress" style="width: {{ profile_completion }}%;"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
